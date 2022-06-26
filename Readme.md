@@ -9,7 +9,7 @@ El objetivo de este proyecto es crear un software capaz de ayudar a los alumnos 
 ## Introducción
 El objetivo de este proyecto es aplicar metodologias de ingenieria de software para crear una aplicacion que logre cubrir una necesidad especifica, para ello, se utilizaran pautas y consejos entregadas por el profesor, estas pautas consisten en:
 1. 
-## Descripción del problema
+## Descripción del problema 
 En la vida universitaria, siempre se ha visto el caso de alumnos que por abc motivo no han podido aprobar una asignatura, esto trae consigo que los alumnos se "atrasen", es decir, que no queden en el nivel correspondiente al que deberian ir. Una de las principales consecuencias de esto es que, dependiendo de la asignatura desaprobada, las asignaturas que se pueden tomar varian totalmente, esto tiene como efecto que en algunos casos, algunos alumnos no saben que camino seguir a la hora de tomar asignaturas, a veces es dificil tomar la decision ya que, se desconoce totalmente la dificultad de la asignatura o en caso contrario, el alumno tiene conocimiento de que la asignatura es dificil. En base a lo mencionado anteriormente, podemos decir que es dificil decidir sobre que asignaturas tomar en un semestre.
 ## Objetivos
 El objetivo de este proyecto es cubrir la necesidad mencionada en la descripcion del problema, para ello, se requiere que el software que se vaya a crear pueda hacer lo siguiente:

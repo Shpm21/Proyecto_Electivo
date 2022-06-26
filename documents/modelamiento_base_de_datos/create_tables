@@ -1,0 +1,55 @@
+create table person (
+	rut text primary key,
+	name text not null,
+	name_2 text not null,
+	last_name text not null,
+	last_name_2 text not null,
+	name_3 text null,
+	last_name_3 text null
+);
+
+create table career (
+	cod text primary key,
+	name text not null
+);
+
+create table study_plain (
+	cod text primary key,
+	name text not null,
+	cod_career text not null,
+	foreign key (cod_career) references career(cod)
+);
+
+create table student (
+	rut_person text not null,
+	cod_plain text not null,
+	year text not null,
+	foreign key(rut_person) references person(rut),
+	foreign key(cod_plain) references study_plain(cod),
+	primary key(rut_person, cod_plain)
+);
+
+create table course(
+	cod text primary key,
+	name text not null,
+	semestrer int not null
+);
+
+create table available_courses(
+	cod_study_plain text not null,
+	cod_course text not null,
+	level int not null,
+	foreign key (cod_study_plain) references study_plain(cod),
+	foreign key (cod_course) references course(cod),
+	primary key(cod_study_plain, cod_course)
+);
+
+create table subjects_taken (
+	cod_course text not null,
+	rut_person text not null,
+	qualification text not null,
+	attendance float not null,
+	foreign key (cod_course) references course(cod),
+	foreign key (rut_person) references person(rut),
+	primary key(cod_course, rut_person)
+);

@@ -1,0 +1,44 @@
+insert into person (rut, name, name_2, last_name, last_name_2) values (
+	'20.025.822-3',
+	'cristian',
+	'wilson',
+	'galleguillos',
+	'araya'
+);
+
+insert into career (cod, name) values (
+	'0001',
+	'ITI'
+);
+
+insert into study_plain (cod, name, cod_career) values (
+	'1001',
+	'ITI_PLAN',
+	'0001'
+);
+
+insert into student (rut_person, cod_plain, year) values 
+('20.025.822-3', '1001', '2019')
+
+insert into available_courses (cod_study_plain, cod_course, level) values
+('1001', '001', 1),
+('1001', '002', 1),
+('1001', '003', 1),
+('1001', '004', 2),
+('1001', '005', 2),
+('1001', '006', 2)
+
+
+insert into course (cod, name, semester) values 
+('001', 'Calculo 1', 1),
+('002', 'Algebra 1', 1),
+('003', 'Quimica', 1),
+('004', 'Fisica 1', 2),
+('005', 'Calculo 2', 2),
+('006', 'Algebra 2', 2)
+
+insert into subjects_taken values
+('001', '20.025.822-3', '5', 0.85),
+('002', '20.025.822-3', '4', 0.85),
+('003', '20.025.822-3', '5', 0.85)
+
