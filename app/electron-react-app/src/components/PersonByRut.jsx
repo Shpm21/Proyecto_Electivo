@@ -23,7 +23,6 @@ export const PersonByRut = ({rut_person}) => {
 		fetchData(); 
     }, [rut_person]);
     
-
     if (!isLoading)
         if (student)
             return (
