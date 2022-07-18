@@ -1,0 +1,76 @@
+-- PROCEDIMIENTOS
+CREATE OR REPLACE FUNCTION get_average_approval(_rut_person text)
+RETURNS int LANGUAGE plpgsql
+AS
+$function$
+DECLARE
+	current_level int := 	max(ac.level) from subjects_taken st
+							inner join course c on st.cod_course = c.cod
+							inner join available_courses ac on c.cod = ac.cod_course
+							where st.rut_person = _rut_person and st.approved = 'true';
+	credits_t int := 0;
+BEGIN
+	FOR i in 1..current_level LOOP
+		credits_t := credits_t + (select sum(c.credit) from subjects_taken st
+					inner join course c on st.cod_course = c.cod 
+					inner join available_courses ac on c.cod = ac.cod_course
+					where st.rut_person = _rut_person and st.approved = true and ac.level = i);
+	END LOOP;
+	RETURN credits_t/current_level;
+END;
+$function$
+
+CREATE OR REPLACE FUNCTION prerequisite_approved(_rut_person text, _cod_course text)
+RETURNS BOOL LANGUAGE plpgsql
+AS
+$function$
+DECLARE
+	cod_pre text := p.cod_course_pre from prerequisite p where p.cod_course = _cod_course;
+	approved bool := st.approved from subjects_taken st
+						where st.cod_course = cod_pre and st.rut_person = _rut_person;
+BEGIN
+	IF NOT EXISTS(select st.approved from subjects_taken st
+						where st.cod_course = cod_pre and st.rut_person = _rut_person) THEN
+		RETURN True;
+	ELSE
+		RETURN approved;
+	END IF;
+END;
+$function$
+
+CREATE OR REPLACE FUNCTION get_available_courses(_rut_person text)
+RETURNS TABLE (course_available text, cod text) LANGUAGE plpgsql
+AS
+$function$
+DECLARE
+	current_level int := 	max(ac.level) from subjects_taken st
+							inner join course c on st.cod_course = c.cod
+							inner join available_courses ac on c.cod = ac.cod_course
+							where st.rut_person = _rut_person and st.approved = 'true';
+							
+	credit_t int := 0;
+	credit_average int :=	get_average_approval(_rut_person);
+	reg RECORD;
+BEGIN
+	for reg in select c.name, ac.cod_course, c.credit
+			from student s inner join study_plain sp on s.cod_plain = sp.cod
+			inner join available_courses ac on ac.cod_study_plain = sp.cod
+			inner join course c on ac.cod_course = c.cod
+			where s.rut_person = _rut_person and 
+			ac.level = current_level + 1 order by credit desc
+			LOOP
+		IF prerequisite_approved(_rut_person, reg.cod_course) AND credit_t <= credit_average THEN
+				course_available := reg.name;
+				cod := reg.cod_course;
+				credit_t := credit_t + reg.credit;
+				RETURN NEXT;
+		END IF;
+
+	END LOOP;
+	RETURN;
+	
+END;
+$function$
+
+select * from get_available_courses('209923114');
+select * from get_available_courses('200258223');

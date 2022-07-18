@@ -29,6 +29,17 @@ create table student (
 	primary key(rut_person, cod_plain)
 );
 
+create table prerequisite (
+	cod_plain text,
+	cod_course text,
+	cod_course_pre text,
+	foreign key (cod_plain) references study_plain(cod),
+	foreign key (cod_course) references course(cod),
+	foreign key (cod_course_pre) references course(cod),
+	
+	primary key (cod_plain, cod_course, cod_course_pre)
+);
+
 create table course(
 	cod text primary key,
 	name text not null,

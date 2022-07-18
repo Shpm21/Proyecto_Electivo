@@ -19,3 +19,4 @@ app.use(require('./routes/course'));
 app.use(require('./routes/person'));
 app.use(require('./routes/studyplain'));
 app.use(require('./routes/login'));
+app.use(require('./routes/request'));
